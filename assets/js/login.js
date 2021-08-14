@@ -55,7 +55,7 @@ $(function () {
                     //登录成功
                     localStorage.setItem('username', $('.login-box [name="username"]').val());
                     localStorage.setItem('token', res.token);
-                    location.href = '/code/index.html';
+                    location.href = '../../index.html';
                 } else {
                     layui.layer.msg(res.message);
                 }
