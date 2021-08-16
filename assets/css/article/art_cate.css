@@ -1,0 +1,10 @@
+.layui-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.layui-form {
+    width: 480px;
+    margin: 15px auto;
+}
