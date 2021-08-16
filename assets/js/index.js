@@ -15,8 +15,8 @@ $(function () {
             layer.close(index);
         });
     })
-
-    // 获取用户信息
+});
+// 获取用户信息
     function getUserInfo() {
         $.ajax({
             type: "GET",
@@ -47,4 +47,3 @@ $(function () {
             $('.layui-nav-img').hide();
         }
     }
-})
