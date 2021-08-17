@@ -31,17 +31,17 @@ $(function () {
         });
     });
     // 添加弹出框提交事件
-    $('body').on('submit', function (e) {
+    $('body').on('submit', '#form-add', function (e) {
         e.preventDefault();
         $.ajax({
             method: 'POST',
             url: '/my/cate/add',
-            data: $('#form-add').serialize(),
+            data: $(this).serialize(),
             success: function (res) {
                 if (res.code === 0) {
                     initArtCateList();
                     // 根据索引，关闭对应的弹出层
-                    layui.layer.close(indexAdd);
+                    layui.layer.close(dialog);
                 }
                 layui.layer.msg(res.message);
             }
@@ -64,5 +64,45 @@ $(function () {
                 }
             }
         });
-    })
+    });
+
+    // 修改分类弹出层提交事件
+    $('body').on('submit', '#form-edit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'PUT',
+            url: '/my/cate/info',
+            data: $(this).serialize(),
+            success: function (res) {
+                if (res.code === 0) {
+                    initArtCateList();
+                    // 根据索引，关闭对应的弹出层
+                    layui.layer.close(dialog);
+                }
+                layui.layer.msg(res.message);
+            }
+        });
+    });
+
+    // 删除按钮点击事件
+    $('tbody').on('click', '.btnDel', function () {
+        let id = this.dataset.id;
+        layer.confirm('确认删除吗?', {
+            icon: 3,
+            title: '提示'
+        }, function (index) {
+            $.ajax({
+                type: "delete",
+                url: "/my/cate/del?id=" + id,
+                success: function (res) {
+                    if (res.code === 0) {
+                        initArtCateList();
+                    }
+                    layer.msg(res.message);
+                }
+            });
+
+            layer.close(index);
+        });
+    });
 })
