@@ -102,4 +102,33 @@ $(function () {
             }
         });
     };
+
+    // 删除按钮点击事件
+    $('tbody').on('click', '.btnDel', function () {
+        // 当前列表行数
+        let len = $('tbody tr').length;
+        // 当前按钮的id
+        let id = this.dataset.id;
+        layer.confirm('确认删除吗?', {
+            icon: 3,
+            title: '提示'
+        }, function (index) {
+            $.ajax({
+                type: "delete",
+                url: "/my/article/info?id=" + id,
+                success: function (res) {
+                    if (res.code === 0) {
+                        // 如果当前页只有一条且当前页码值大于一则让页码值减一
+                        if (len === 1 && q.pagenum > 1) {
+                            q.pagenum--;
+                        }
+                        // 重新获取列表
+                        initTable();
+                    }
+                    layer.msg(res.message);
+                }
+            });
+            layer.close(index);
+        });
+    });
 })
